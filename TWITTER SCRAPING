@@ -162,17 +162,7 @@ if st.button("Scrape Tweets"):
     href = f'<a href="data:file/json;base64,{b64}" download="tweet_data.json">Download JSON File</a>'
     st.markdown(href, unsafe_allow_html=True)
 
-    # Upload to MongoDB
-if st.button("Upload to MongoDB"):
-    tweet = scrape_twitter_data(keyword, start_date, end_date, tweet_count)
-    tweet_data = create_df(tweet)
-
-    client = MongoClient('mongodb://santhiya1204:santhiya1204@ac-dqtoutk-shard-00-00.oeojj5f.mongodb.net:27017,ac-dqtoutk-shard-00-01.oeojj5f.mongodb.net:27017,ac-dqtoutk-shard-00-02.oeojj5f.mongodb.net:27017/?ssl=true&replicaSet=atlas-6lfbkt-shard-0&authSource=admin&retryWrites=true&w=majority')
-    db = client["twitter_db_streamlit"]
-    collection = db['tweet']
-    tweet_data_json = json.loads(tweet_data.to_json(orient='records'))
-    collection.insert_many(tweet_data_json)
-    st.success('Uploaded to MongoDB')
+ 
 
 # Download as csv
 if st.button("Download as CSV"):
